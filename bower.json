@@ -1,14 +1,14 @@
 {
   "name": "ngTinyScrollbar",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "homepage": "https://github.com/yads/ngTinyScrollbar",
   "authors": [
     "Vadim Kazakov <yads1@gmail.com>"
   ],
   "description": "An angular directive port of the TinyScrollba",
   "main": [
-      "dist/ng-tiny-scrollbar.min.js",
-      "dist/ng-tiny-scrollbar.min.css"
+    "dist/ng-tiny-scrollbar.min.js",
+    "dist/ng-tiny-scrollbar.min.css"
   ],
   "keywords": [
     "scrollbar",
@@ -25,7 +25,7 @@
     "tests"
   ],
   "dependencies": {
-    "angularjs": "~1.2.23",
+    "angular": "~1.2.23",
     "angular-animate": "~1.2.23"
   }
 }
