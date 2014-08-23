@@ -17,6 +17,8 @@ Add css and javascript to your site
 <script src="bower_components/ng-tiny-scrollbar/dist/ng-tiny-scrollbar.js"></script>
 ```
 
+Add the `ngTinyScrollbar` module as a dependency of your application
+
 Mark any item you want custom scrollbars on with the scrollbar attribute.
 
 ```html
