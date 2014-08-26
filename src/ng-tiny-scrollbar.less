@@ -8,7 +8,6 @@
   position: relative;
 }
 .scroll-overview {
-  list-style: none;
   position: absolute;
   left: 0;
   top: 0;
@@ -23,6 +22,7 @@
   right: 0;
   width: @scrollbar-width;
   transition: 0.6s ease-in-out opacity;
+  height: 100%;
 
   &.disable { display: none; }
 
@@ -32,11 +32,6 @@
   &:hover {
     .visible();
   }
-}
-.scroll-track {
-  height: 100%;
-  width: @scrollbar-width;
-  position: relative;
 }
 .scroll-thumb {
   background-color: @scroll-thumb-color;
@@ -48,11 +43,6 @@
   position: absolute;
   top: 0;
   left: 1px;
-  .end {
-    overflow: hidden;
-    height: 5px;
-    width: 13px;
-  }
 }
 
 body.scroll-no-select {

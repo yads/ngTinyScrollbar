@@ -29,7 +29,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
         return {
             restrict: 'A',
             transclude: true,
-            template: '<div class="scroll-bar"><div class="scroll-track"><div class="scroll-thumb"><div class="scroll-end"></div></div></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
+            template: '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
             controller: function($scope, $element, $attrs) {
 
                 var defaults = {
@@ -57,7 +57,6 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $viewport = angular.element($element[0].querySelectorAll('.scroll-viewport')[0]),
                     $overview = angular.element($element[0].querySelectorAll('.scroll-overview')[0]),
                     $scrollbar = angular.element($element[0].querySelectorAll('.scroll-bar')[0]),
-                    $track = angular.element($element[0].querySelectorAll('.scroll-track')[0]),
                     $thumb = angular.element($element[0].querySelectorAll('.scroll-thumb')[0]),
                     mousePosition = 0,
                     isHorizontal = this.options.axis === 'x',
@@ -97,7 +96,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     this.trackSize = this.options.trackSize || this.viewportSize;
                     this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
                     this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
-                    mousePosition = $track[0].offsetTop;
+                    mousePosition = $scrollbar[0].offsetTop;
 
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
@@ -129,7 +128,6 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
                     $overview.css(posiLabel, -self.contentPosition + 'px');
                     $scrollbar.css(sizeLabel, self.trackSize + 'px');
-                    $track.css(sizeLabel, self.trackSize + 'px');
                     $thumb.css(sizeLabel, self.thumbSize + 'px');
                 }
 
@@ -140,7 +138,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     }
                     else {
                         $thumb.on('mousedown', start);
-                        $track.on('mousedown', drag);
+                        $scrollbar.on('mousedown', drag);
                     }
 
                     angular.element($window).on('resize', resize);
@@ -262,7 +260,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                 this.cleanup = function() {
                     $viewport.off('touchstart', touchstart);
                     $thumb.off('mousedown', start);
-                    $track.off('mousedown', drag);
+                    $scrollbar.off('mousedown', drag);
                     angular.element($window).off('resize', resize);
                     $element.off(wheelEvent, wheel);
                     end();

@@ -3,7 +3,6 @@
   position: relative;
 }
 .scroll-overview {
-  list-style: none;
   position: absolute;
   left: 0;
   top: 0;
@@ -19,6 +18,7 @@
   width: 15px;
   -webkit-transition: 0.6s ease-in-out opacity;
           transition: 0.6s ease-in-out opacity;
+  height: 100%;
 }
 .scroll-bar.disable {
   display: none;
@@ -28,11 +28,6 @@
 }
 .scroll-bar:hover {
   opacity: 1 !important;
-}
-.scroll-track {
-  height: 100%;
-  width: 15px;
-  position: relative;
 }
 .scroll-thumb {
   background-color: #808080;
@@ -44,11 +39,6 @@
   position: absolute;
   top: 0;
   left: 1px;
-}
-.scroll-thumb .end {
-  overflow: hidden;
-  height: 5px;
-  width: 13px;
 }
 body.scroll-no-select {
   -webkit-user-select: none;

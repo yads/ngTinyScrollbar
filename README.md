@@ -31,15 +31,17 @@ Mark any item you want custom scrollbars on with the scrollbar attribute.
 </div>
 ```
 
-Add a width and a height in your css for the .scroll-viewport and a width for .scroll-overview underneat your item
+Add a width and a height in your css for the .scroll-viewport underneath your item. Ensure your
+container has a width that's slightly larger than the viewport otherwise the scrollbar will be
+overtop of your content
 
 ```css
-#idCustomScrollbarContainer .scroll-viewport {
-    height: 200px;
-    width: 100px;
+#idCustomScrollbarContainer {
+  width: 120px;
 }
 
-#idCustomScrollbarContainer .scroll-overview {
+#idCustomScrollbarContainer .scroll-viewport {
+    height: 200px;
     width: 100px;
 }
 ```
