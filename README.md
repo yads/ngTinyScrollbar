@@ -2,6 +2,7 @@ ngTinyScrollbar
 ===============
 
 An angular directive port of the [TinyScrollbar](https://github.com/wieringen/tinyscrollbar)
+See simple [demo](http://ng-tiny-scrollbar.azurewebsites.net/test.html) 
 
 How to use
 ==========
