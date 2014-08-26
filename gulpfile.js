@@ -37,5 +37,11 @@ gulp.task('styles', function() {
 gulp.task('build', ['scripts', 'styles'], function() {
     return gulp.src('src/*.js')
         .pipe(gulp.dest('dist'));
+});
 
+gulp.task('serve', function() {
+	gulp.src('.')
+		.pipe(plugins.webserver({
+			livereload: true
+		}));
 });

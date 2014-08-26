@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../dist/ng-tiny-scrollbar.min.css" />
+  <style type="text/css">
+    #content {
+      width: 320px;
+    }
+    #content .scroll-viewport {
+      height: 300px;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div ng-app="ngTinyScrollbar-test">
+    <div id="content" scrollbar>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique,
+    nisi ut facilisis ullamcorper, nisi tellus dictum sem, id cursus dolor
+    magna quis ex. Maecenas quis libero vitae neque laoreet ullamcorper a ut
+    lectus. Aenean congue tortor id dictum pulvinar. Nam id varius lacus.
+    Nulla fermentum et urna in laoreet. Phasellus non ornare nulla. Donec
+    sagittis placerat tortor, ut pulvinar nulla egestas at. Vestibulum
+    condimentum sit amet tellus sed consequat. Mauris commodo, elit ac
+    sagittis vestibulum, massa elit faucibus nulla, et egestas metus diam
+    convallis nunc. Aenean venenatis cursus enim, vitae vestibulum neque
+    sollicitudin sed. Praesent metus velit, laoreet et dolor ac, feugiat
+    posuere mi.
+    <br/>
+    Cras condimentum felis velit, vel egestas turpis fringilla quis.
+    Morbi nec turpis sodales, faucibus erat quis, elementum leo. Nullam
+    auctor augue lectus, aliquet ultricies est volutpat sit amet. Nullam
+    lacinia tempor magna eget congue. Donec quam quam, tempus quis dui sed,
+    tempor egestas elit. Sed eu auctor leo, at scelerisque dolor. Integer at
+    finibus mauris. Pellentesque habitant morbi tristique senectus et netus
+    et malesuada fames ac turpis egestas. Proin non maximus odio.
+    <br/>
+    Mauris sollicitudin eros vitae sollicitudin ullamcorper. Pellentesque ut
+    tortor mi. Etiam nec gravida arcu. In hac habitasse platea dictumst.
+    Phasellus condimentum aliquet volutpat. Pellentesque in fringilla felis.
+    Vivamus sollicitudin odio sed lorem finibus, at consequat dui maximus.
+    Nulla facilisi. Vivamus interdum rutrum enim, vel faucibus dui gravida non.
+    Maecenas gravida, turpis ac tincidunt vehicula, elit mi sodales dolor, ac
+    rhoncus dui nibh et tortor. In eget dolor nec est commodo feugiat. Duis
+    pulvinar ipsum nec venenatis vestibulum.
+    <br/>
+    Integer pharetra mauris nisl, mollis cursus felis viverra nec. Curabitur
+    sed elementum dui. Suspendisse potenti. Suspendisse vel ante sollicitudin
+    eros gravida porta eget eu arcu. Duis ultricies est risus. Nam pellentesque
+    non nisl nec gravida. Pellentesque sed arcu laoreet, rutrum purus eget,
+    ornare ex. Ut at turpis diam. Nullam sit amet erat nec lacus commodo
+    molestie ornare quis felis. Morbi ut orci a ipsum posuere consectetur.
+    Maecenas sit amet sem sed orci pharetra tincidunt. Donec lobortis mauris
+    nec sollicitudin tempor. Phasellus quis nisl ut tortor sagittis porttitor
+    at sit amet nunc.
+    <br/>
+    Donec quis ex in nulla ultricies euismod quis sit amet mi. Sed consectetur
+    turpis magna, sed ultricies neque malesuada at. Proin ut suscipit lectus,
+    ut consectetur ipsum. Cras dignissim enim quis mauris faucibus, ac
+    efficitur mauris fermentum. Phasellus dignissim, ligula id consequat
+    maximus, urna nisi congue magna, a fermentum tellus urna non neque. Etiam
+    blandit sit amet ante quis vestibulum. Praesent facilisis diam venenatis
+    elit tempor tincidunt. Donec at tellus ante. Nullam vitae risus tristique,
+    facilisis ante nec, ultrices magna.
+    </div>
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-animate.min.js"></script>
+  <script src="../dist/ng-tiny-scrollbar.min.js"></script>
+  <script>
+  angular.module('ngTinyScrollbar-test', [
+    'ng',
+    'ngAnimate',
+    'ngTinyScrollbar'
+  ]);
+  </script>
+</body>
+</html>
