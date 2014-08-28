@@ -229,7 +229,8 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     var mousePositionNew = isHorizontal ? event.pageX : event.pageY,
                         thumbPositionDelta = mousePositionNew - mousePosition;
 
-                    if(self.options.scrollInvert && hasTouchEvents)
+                    if((self.options.scrollInvert && !hasTouchEvents) ||
+                      (hasTouchEvents && !self.options.scrollInvert))
                     {
                         thumbPositionDelta = mousePosition - mousePositionNew;
                     }
