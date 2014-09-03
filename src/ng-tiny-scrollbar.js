@@ -61,8 +61,9 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     mousePosition = 0,
                     isHorizontal = this.options.axis === 'x',
                     hasTouchEvents = ('ontouchstart' in document.documentElement),
-                    wheelEvent = ('onwheel' in document || document.documentMode >= 9) ? 'wheel' :
-                        (document.onmousewheel !== undefined ? 'mousewheel' : 'DOMMouseScroll'),
+                    wheelEvent = ("onwheel" in document ? "wheel" : // Modern browsers support "wheel"
+                                  document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+                                  "DOMMouseScroll"), // let's assume that remaining browsers are older Firefox
                     sizeLabel = isHorizontal ? 'width' : 'height',
                     posiLabel = isHorizontal ? 'left' : 'top',
                     moveEvent = document.createEvent('HTMLEvents'),
@@ -199,8 +200,25 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
 
                     var evntObj = event || window.event,
-                        deltaDir = 'delta' + self.options.axis.toUpperCase(),
-                        wheelSpeedDelta = -(evntObj[deltaDir] || evntObj.detail || (-1 / 3 * evntObj.wheelDelta)) / 40;
+                        deltaDir = self.options.axis.toUpperCase(),
+                        delta = {
+                          X: evntObj.deltaX,
+                          Y: evntObj.deltaY
+                        },
+                        wheelSpeed = evntObj.deltaMode == 0 ? self.options.wheelSpeed : 1;
+
+                    if (self.options.scrollInvert) {
+                      wheelSpeed *= -1;
+                    }
+
+                    if (wheelEvent === 'mousewheel') {
+                      delta.Y = -1 * evntObj.wheelDelta / 40;
+                      evntObj.wheelDeltaX && ( delta.X = -1 * evntObj.wheelDeltaX / 40 );
+                    }
+                    delta.X *= -1 / wheelSpeed;
+                    delta.Y *= -1 / wheelSpeed;
+
+                    var wheelSpeedDelta = delta[deltaDir];
 
                     self.contentPosition -= wheelSpeedDelta * self.options.wheelSpeed;
                     self.contentPosition = Math.min((self.contentSize - self.viewportSize), Math.max(0, self.contentPosition));
