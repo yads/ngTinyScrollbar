@@ -105,7 +105,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                         return this;
                     }
 
-                    if (!this.options.alwaysVisible) {
+                    if (!this.options.alwaysVisible && this.viewportSize > 0) {
                         //flash the scrollbar when update happens
                         $animate.addClass($scrollbar[0], 'visible', function() {
                             $animate.removeClass($scrollbar[0], 'visible');
