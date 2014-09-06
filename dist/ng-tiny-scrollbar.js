@@ -261,11 +261,11 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $overview.css(posiLabel, -self.contentPosition + 'px');
                 }
 
-                function end() {
+                function end(cleanup) {
 
                     $body.removeClass('scroll-no-select');
                     $element.removeClass('scroll-no-select');
-                    if (!self.options.alwaysVisible) {
+                    if (!cleanup && !self.options.alwaysVisible) {
                         $animate.removeClass($scrollbar[0], 'visible');
                     }
 
@@ -282,7 +282,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $scrollbar.off('mousedown', drag);
                     angular.element($window).off('resize', resize);
                     $element.off(wheelEvent, wheel);
-                    end();
+                    end(true);
                 };
 
             },
