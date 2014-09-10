@@ -107,8 +107,9 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     if (!this.options.alwaysVisible && this.viewportSize > 0) {
                         //flash the scrollbar when update happens
-                        $animate.addClass($scrollbar[0], 'visible', function() {
-                            $animate.removeClass($scrollbar[0], 'visible');
+                        $animate.addClass($scrollbar[0], 'visible').then(function() {
+                          $animate.removeClass($scrollbar[0], 'visible');
+                          $scope.$digest();
                         });
                     }
                     switch (scrollTo) {
@@ -165,7 +166,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $element.addClass('scroll-no-select');
 
                     if (!self.options.alwaysVisible) {
-                        $animate.addClass($scrollbar[0], 'visible');
+                        $scrollbar.addClass('visible');
                     }
                     mousePosition = isHorizontal ? event.pageX : event.pageY;
                     self.thumbPosition = parseInt($thumb.css(posiLabel), 10) || 0;
@@ -191,10 +192,10 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                         if (restoreVisibilityAfterWheel) {
                             $timeout.cancel(restoreVisibilityAfterWheel);
                         }
-                        $animate.addClass($scrollbar[0], 'visible');
+                        $scrollbar.addClass('visible');
 
                         restoreVisibilityAfterWheel = $timeout(function() {
-                            $animate.removeClass($scrollbar[0], 'visible');
+                            $scrollbar.removeClass('visible');
                         }, 100);
                     }
 
@@ -266,7 +267,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $body.removeClass('scroll-no-select');
                     $element.removeClass('scroll-no-select');
                     if (!cleanup && !self.options.alwaysVisible) {
-                        $animate.removeClass($scrollbar[0], 'visible');
+                        $scrollbar.removeClass('visible');
                     }
 
                     $document.off('mousemove', drag);
