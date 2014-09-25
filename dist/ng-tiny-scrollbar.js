@@ -89,16 +89,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     return self;
                 };
 
-                this.update = function(scrollTo)
-                {
-                    this.updateScrollbar(scrollTo);
-                    if (this.contentRatio <= 1) {
-                      $overview.css(posiLabel, -self.contentPosition + 'px');
-                    }
-                    return this;
-                };
-
-                this.updateScrollbar = function(scrollTo) {
+                this.update = function(scrollTo) {
                   this.viewportSize = $viewport[0]['offset'+ sizeLabelCap];
                   this.contentSize = $overview[0]['scroll'+ sizeLabelCap];
                   this.contentRatio = this.viewportSize / this.contentSize;
@@ -109,17 +100,6 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                   $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
-                  if (this.contentRatio > 1) {
-                      return this;
-                  }
-
-                  if (!this.options.alwaysVisible && this.viewportSize > 0) {
-                      //flash the scrollbar when update happens
-                      $animate.addClass($scrollbar[0], 'visible').then(function() {
-                        $animate.removeClass($scrollbar[0], 'visible');
-                        $scope.$digest();
-                      });
-                  }
                   switch (scrollTo) {
                       case 'bottom':
                           this.contentPosition = this.contentSize - this.viewportSize;
@@ -130,9 +110,23 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                       default:
                           this.contentPosition = parseInt(scrollTo, 10) || 0;
                   }
+
+                  if (this.contentRatio > 1) {
+                      $overview.css(posiLabel, -self.contentPosition + 'px');
+                      return this;
+                  }
+
+                  if (!this.options.alwaysVisible && this.viewportSize > 0) {
+                      //flash the scrollbar when update happens
+                      $animate.addClass($scrollbar[0], 'visible').then(function() {
+                        $animate.removeClass($scrollbar[0], 'visible');
+                        $scope.$digest();
+                      });
+                  }
                   $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
                   $scrollbar.css(sizeLabel, self.trackSize + 'px');
                   $thumb.css(sizeLabel, self.thumbSize + 'px');
+                  $overview.css(posiLabel, -self.contentPosition + 'px');
 
                   return this;
                 }
