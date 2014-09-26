@@ -90,46 +90,50 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                 };
 
                 this.update = function(scrollTo) {
-                  this.viewportSize = $viewport[0]['offset'+ sizeLabelCap];
-                  this.contentSize = $overview[0]['scroll'+ sizeLabelCap];
-                  this.contentRatio = this.viewportSize / this.contentSize;
-                  this.trackSize = this.options.trackSize || this.viewportSize;
-                  this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
-                  this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
-                  mousePosition = $scrollbar[0].offsetTop;
+                    this.viewportSize = $viewport[0]['offset'+ sizeLabelCap];
+                    this.contentSize = $overview[0]['scroll'+ sizeLabelCap];
+                    this.contentRatio = this.viewportSize / this.contentSize;
+                    this.trackSize = this.options.trackSize || this.viewportSize;
+                    this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
+                    this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
+                    mousePosition = $scrollbar[0].offsetTop;
 
-                  $scrollbar.toggleClass('disable', this.contentRatio >= 1);
+                    $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
-                  switch (scrollTo) {
-                      case 'bottom':
-                          this.contentPosition = this.contentSize - this.viewportSize;
-                          break;
-                      case 'relative':
-                          this.contentPosition = Math.min(this.contentSize - this.viewportSize, Math.max(0, this.contentPosition));
-                          break;
-                      default:
-                          this.contentPosition = parseInt(scrollTo, 10) || 0;
-                  }
+                    if (this.contentRatio > 1) {
+                        if (scrollTo !== 'bottom' && scrollTo !== 'relative') {
+                            this.contentPosition = parseInt(scrollTo, 10) || 0;
+                            $overview.css(posiLabel, -self.contentPosition + 'px');
+                        }
+                        return this;
+                    }
 
-                  if (this.contentRatio > 1) {
-                      $overview.css(posiLabel, -self.contentPosition + 'px');
-                      return this;
-                  }
-
-                  if (!this.options.alwaysVisible && this.viewportSize > 0) {
+                    if (!this.options.alwaysVisible && this.viewportSize > 0) {
                       //flash the scrollbar when update happens
                       $animate.addClass($scrollbar[0], 'visible').then(function() {
                         $animate.removeClass($scrollbar[0], 'visible');
                         $scope.$digest();
                       });
-                  }
-                  $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
-                  $scrollbar.css(sizeLabel, self.trackSize + 'px');
-                  $thumb.css(sizeLabel, self.thumbSize + 'px');
-                  $overview.css(posiLabel, -self.contentPosition + 'px');
+                    }
 
-                  return this;
-                }
+                    switch (scrollTo) {
+                        case 'bottom':
+                            this.contentPosition = this.contentSize - this.viewportSize;
+                            break;
+                        case 'relative':
+                            this.contentPosition = Math.min(this.contentSize - this.viewportSize, Math.max(0, this.contentPosition));
+                            break;
+                        default:
+                            this.contentPosition = parseInt(scrollTo, 10) || 0;
+                    }
+
+                    $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
+                    $scrollbar.css(sizeLabel, self.trackSize + 'px');
+                    $thumb.css(sizeLabel, self.thumbSize + 'px');
+                    $overview.css(posiLabel, -self.contentPosition + 'px');
+
+                    return this;
+                };
 
                 function setEvents() {
 
