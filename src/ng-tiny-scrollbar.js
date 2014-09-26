@@ -100,15 +100,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
-                    if (this.contentRatio > 1) {
-                        if (scrollTo !== 'bottom' && scrollTo !== 'relative') {
-                            this.contentPosition = parseInt(scrollTo, 10) || 0;
-                            $overview.css(posiLabel, -self.contentPosition + 'px');
-                        }
-                        return this;
-                    }
-
-                    if (!this.options.alwaysVisible && this.viewportSize > 0) {
+                    if (!this.options.alwaysVisible && this.contentRatio < 1 && this.viewportSize > 0) {
                       //flash the scrollbar when update happens
                       $animate.addClass($scrollbar[0], 'visible').then(function() {
                         $animate.removeClass($scrollbar[0], 'visible');
@@ -127,6 +119,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                             this.contentPosition = parseInt(scrollTo, 10) || 0;
                     }
 
+                    ensureContentPosition();
                     $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
                     $scrollbar.css(sizeLabel, self.trackSize + 'px');
                     $thumb.css(sizeLabel, self.thumbSize + 'px');
@@ -134,6 +127,17 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     return this;
                 };
+
+                function ensureContentPosition() {
+                    // if scrollbar is on, ensure the bottom of the content does not go above the bottom of the viewport
+                    if (self.contentRatio <= 1 && self.contentPosition > self.contentSize - self.viewportSize) {
+                        self.contentPosition = self.contentSize - self.viewportSize;
+                    }
+                    // if scrollbar is off, ensure the top of the content does not go below the top of the viewport
+                    else if (self.contentRatio > 1 && self.contentPosition > 0) {
+                        self.contentPosition = 0;
+                    }
+                }
 
                 function setEvents() {
 
@@ -228,6 +232,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     $element[0].dispatchEvent(moveEvent);
 
+                    ensureContentPosition();
                     $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
                     $overview.css(posiLabel, -self.contentPosition + 'px');
 
@@ -260,6 +265,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     $element[0].dispatchEvent(moveEvent);
 
+                    ensureContentPosition();
                     $thumb.css(posiLabel, thumbPositionNew + 'px');
                     $overview.css(posiLabel, -self.contentPosition + 'px');
                 }
