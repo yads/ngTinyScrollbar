@@ -90,13 +90,13 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                 };
 
                 this.update = function(scrollTo) {
-                    this.viewportSize = $viewport[0]['offset'+ sizeLabelCap];
-                    this.contentSize = $overview[0]['scroll'+ sizeLabelCap];
+                    this.viewportSize = $viewport.prop('offset'+ sizeLabelCap);
+                    this.contentSize = $overview.prop('scroll'+ sizeLabelCap);
                     this.contentRatio = this.viewportSize / this.contentSize;
                     this.trackSize = this.options.trackSize || this.viewportSize;
                     this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
                     this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
-                    mousePosition = $scrollbar[0].offsetTop;
+                    mousePosition = $scrollbar.prop('offsetTop');
 
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
