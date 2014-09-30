@@ -296,7 +296,10 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
             },
             link: function(scope, iElement, iAttrs, controller) {
-                iElement.css('position', 'relative');
+                var position = window.getComputedStyle(iElement[0]).getPropertyValue('position');
+                if (position !== 'relative' && position !== 'absolute') {
+                    iElement.css('position', 'relative');
+                }
                 controller.initialize();
                 iElement.on('$destroy', function() {
                     controller.cleanup();
