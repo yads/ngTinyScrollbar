@@ -24,8 +24,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 'use strict';
 
-angular.module('ngTinyScrollbar', ['ngAnimate'])
-    .directive('scrollbar', function($window, $animate, $timeout, $parse) {
+angular.module('ngTinyScrollbar', [])
+    .directive('scrollbar', function($window, $timeout, $parse, $animate) {
         return {
             restrict: 'A',
             transclude: true,
@@ -101,22 +101,21 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1);
 
                     if (!this.options.alwaysVisible && this.contentRatio < 1 && this.viewportSize > 0) {
-                      //flash the scrollbar when update happens
-                      $animate.addClass($scrollbar[0], 'visible').then(function() {
-                        $animate.removeClass($scrollbar[0], 'visible');
-                        $scope.$digest();
-                      });
+                        //flash the scrollbar when update happens
+                        $animate.addClass($scrollbar, 'visible').then(function() {
+                            $animate.removeClass($scrollbar, 'visible');
+                            $scope.$digest();
+                        });
                     }
 
-                    switch (scrollTo) {
-                        case 'bottom':
-                            this.contentPosition = this.contentSize - this.viewportSize;
-                            break;
-                        case 'relative':
-                            this.contentPosition = Math.min(this.contentSize - this.viewportSize, Math.max(0, this.contentPosition));
-                            break;
-                        default:
-                            this.contentPosition = parseInt(scrollTo, 10) || 0;
+                    if (scrollTo != null)  {
+                        switch (scrollTo) {
+                            case 'bottom':
+                                this.contentPosition = this.contentSize - this.viewportSize;
+                                break;
+                            default:
+                                this.contentPosition = parseInt(scrollTo, 10) || 0;
+                        }
                     }
 
                     ensureContentPosition();
@@ -157,7 +156,7 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
                 }
 
                 function resize() {
-                    self.update('relative');
+                    self.update();
                 }
 
                 function touchstart(event) {
