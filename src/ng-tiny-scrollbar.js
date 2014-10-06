@@ -24,8 +24,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 'use strict';
 
-angular.module('ngTinyScrollbar', ['ngAnimate'])
-    .directive('scrollbar', function($window, $animate, $timeout, $parse) {
+angular.module('ngTinyScrollbar', [])
+    .directive('scrollbar', function($window, $timeout, $parse, $animate) {
         return {
             restrict: 'A',
             transclude: true,
@@ -102,8 +102,8 @@ angular.module('ngTinyScrollbar', ['ngAnimate'])
 
                     if (!this.options.alwaysVisible && this.contentRatio < 1 && this.viewportSize > 0) {
                         //flash the scrollbar when update happens
-                        $animate.addClass($scrollbar[0], 'visible').then(function() {
-                            $animate.removeClass($scrollbar[0], 'visible');
+                        $animate.addClass($scrollbar, 'visible').then(function() {
+                            $animate.removeClass($scrollbar, 'visible');
                             $scope.$digest();
                         });
                     }
