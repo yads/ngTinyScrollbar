@@ -168,7 +168,6 @@ angular.module('ngTinyScrollbar', [])
 
                 function start(event) {
                     $body.addClass('scroll-no-select');
-                    $element.addClass('scroll-no-select');
 
                     if (!self.options.alwaysVisible) {
                         $scrollbar.addClass('visible');
@@ -272,7 +271,6 @@ angular.module('ngTinyScrollbar', [])
                 function end() {
 
                     $body.removeClass('scroll-no-select');
-                    $element.removeClass('scroll-no-select');
                     if (!self.options.alwaysVisible) {
                         $scrollbar.removeClass('visible');
                     }
