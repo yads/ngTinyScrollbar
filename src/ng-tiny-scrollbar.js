@@ -205,7 +205,7 @@ angular.module('ngTinyScrollbar', [])
                     }
 
 
-                    var evntObj = event || window.event,
+                    var evntObj = event.originalEvent || event || window.event,
                         deltaDir = self.options.axis.toUpperCase(),
                         delta = {
                           X: evntObj.deltaX,
