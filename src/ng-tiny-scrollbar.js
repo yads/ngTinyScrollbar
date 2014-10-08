@@ -29,7 +29,7 @@ angular.module('ngTinyScrollbar', [])
         return {
             restrict: 'A',
             transclude: true,
-            template: '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
+            template: '<div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div><div class="scroll-bar"><div class="scroll-thumb"></div></div>',
             controller: function($scope, $element, $attrs) {
 
                 var defaults = {
