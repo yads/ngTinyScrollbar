@@ -98,7 +98,7 @@ angular.module('ngTinyScrollbar', [])
                     this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
                     mousePosition = $scrollbar.prop('offsetTop');
 
-                    $scrollbar.toggleClass('disable', this.contentRatio >= 1);
+                    $scrollbar.toggleClass('disable', this.contentRatio >= 1 || isNaN(this.contentRatio));
 
                     if (!this.options.alwaysVisible && this.contentRatio < 1 && this.viewportSize > 0) {
                         //flash the scrollbar when update happens
