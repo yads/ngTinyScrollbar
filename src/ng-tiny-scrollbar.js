@@ -29,7 +29,7 @@ angular.module('ngTinyScrollbar', [])
         return {
             restrict: 'A',
             transclude: true,
-            template: '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
+            template: '<div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div><div class="scroll-bar"><div class="scroll-thumb"></div></div>',
             controller: function($scope, $element, $attrs) {
 
                 var defaults = {
@@ -168,7 +168,6 @@ angular.module('ngTinyScrollbar', [])
 
                 function start(event) {
                     $body.addClass('scroll-no-select');
-                    $element.addClass('scroll-no-select');
 
                     if (!self.options.alwaysVisible) {
                         $scrollbar.addClass('visible');
@@ -205,7 +204,7 @@ angular.module('ngTinyScrollbar', [])
                     }
 
 
-                    var evntObj = event || window.event,
+                    var evntObj = event.originalEvent || event || window.event,
                         deltaDir = self.options.axis.toUpperCase(),
                         delta = {
                           X: evntObj.deltaX,
@@ -272,7 +271,6 @@ angular.module('ngTinyScrollbar', [])
                 function end() {
 
                     $body.removeClass('scroll-no-select');
-                    $element.removeClass('scroll-no-select');
                     if (!self.options.alwaysVisible) {
                         $scrollbar.removeClass('visible');
                     }
