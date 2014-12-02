@@ -205,7 +205,7 @@ angular.module('ngTinyScrollbar', [])
                     }
 
 
-                    var evntObj = event || window.event,
+                    var evntObj = (event && event.originalEvent) || event || $window.event,
                         deltaDir = self.options.axis.toUpperCase(),
                         delta = {
                           X: evntObj.deltaX,
@@ -297,7 +297,7 @@ angular.module('ngTinyScrollbar', [])
 
             },
             link: function(scope, iElement, iAttrs, controller) {
-                var position = window.getComputedStyle(iElement[0]).getPropertyValue('position');
+                var position = $window.getComputedStyle(iElement[0]).getPropertyValue('position');
                 if (position !== 'relative' && position !== 'absolute') {
                     iElement.css('position', 'relative');
                 }
