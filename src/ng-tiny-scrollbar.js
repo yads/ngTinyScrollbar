@@ -153,6 +153,18 @@ angular.module('ngTinyScrollbar', [])
                     if(self.options.wheel) {
                         $element.on(wheelEvent, wheel);
                     }
+
+                    // check DOM content update
+                    var observer = new MutationObserver(function (mutations) {
+                        self.update();
+                    });
+
+                    observer.observe($element[0], {
+                        childList: true,
+                        subtree: true,
+                        characterData: true,
+                        attributes: true
+                    });
                 }
 
                 function resize() {
