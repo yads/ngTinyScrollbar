@@ -60,7 +60,7 @@ angular.module('ngTinyScrollbar', [])
                     $thumb = angular.element($element[0].querySelectorAll('.scroll-thumb')[0]),
                     mousePosition = 0,
                     isHorizontal = this.options.axis === 'x',
-                    hasTouchEvents = ('ontouchstart' in document.documentElement),
+                    hasTouchEvents = ('ontouchstart' in $window),
                     wheelEvent = ("onwheel" in document ? "wheel" : // Modern browsers support "wheel"
                                   document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
                                   "DOMMouseScroll"), // let's assume that remaining browsers are older Firefox
