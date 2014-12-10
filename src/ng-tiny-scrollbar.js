@@ -160,9 +160,10 @@ angular.module('ngTinyScrollbar', [])
                 }
 
                 function touchstart(event) {
-                    if (1 === event.touches.length) {
+                    var evntObj = (event && event.originalEvent) || event || $window.event;
+                    if (1 === evntObj.touches.length) {
                         event.stopPropagation();
-                        start(event.touches[0]);
+                        start(evntObj.touches[0]);
                     }
                 }
 
@@ -241,8 +242,11 @@ angular.module('ngTinyScrollbar', [])
                 }
 
                 function touchdrag(event) {
-                    event.preventDefault();
-                    drag(event.touches[0]);
+                    var evntObj = (event && event.originalEvent) || event || $window.event;
+                    if (1 === evntObj.touches.length) {
+                        event.preventDefault();
+                        drag(evntObj.touches[0]);
+                    }
                 }
 
                 function drag(event) {
