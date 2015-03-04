@@ -143,10 +143,8 @@ angular.module('ngTinyScrollbar', [])
                     if(hasTouchEvents) {
                         $viewport.on('touchstart', touchstart);
                     }
-                    else {
-                        $thumb.on('mousedown', start);
-                        $scrollbar.on('mousedown', drag);
-                    }
+                    $thumb.on('mousedown', start);
+                    $scrollbar.on('mousedown', drag);
 
                     angular.element($window).on('resize', resize);
 
@@ -180,11 +178,10 @@ angular.module('ngTinyScrollbar', [])
                     if(hasTouchEvents) {
                         $document.on('touchmove', touchdrag);
                         $document.on('touchend', end);
-                    } else {
-                        $document.on('mousemove', drag);
-                        $document.on('mouseup', end);
-                        $thumb.on('mouseup', end);
                     }
+                    $document.on('mousemove', drag);
+                    $document.on('mouseup', end);
+                    $thumb.on('mouseup', end);
                 }
 
                 function wheel(event) {
@@ -258,8 +255,8 @@ angular.module('ngTinyScrollbar', [])
                     var mousePositionNew = isHorizontal ? event.pageX : event.pageY,
                         thumbPositionDelta = mousePositionNew - mousePosition;
 
-                    if((self.options.scrollInvert && !hasTouchEvents) ||
-                      (hasTouchEvents && !self.options.scrollInvert))
+                    if((self.options.scrollInvert && event.type === 'mousemove') ||
+                        (event.type !== 'mousemove' && !self.options.scrollInvert))
                     {
                         thumbPositionDelta = mousePosition - mousePositionNew;
                     }
