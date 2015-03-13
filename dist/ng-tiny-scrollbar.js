@@ -25,7 +25,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 'use strict';
 
 angular.module('ngTinyScrollbar', [])
-    .directive('scrollbar', function($window, $timeout, $parse, $animate) {
+    .directive('scrollbar', ['$window', '$timeout', '$parse', '$animate', function($window, $timeout, $parse, $animate) {
         return {
             restrict: 'A',
             transclude: true,
@@ -308,4 +308,4 @@ angular.module('ngTinyScrollbar', [])
                 });
             }
         };
-    });
+    }]);
