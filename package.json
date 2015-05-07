@@ -1,5 +1,5 @@
 {
-  "name": "ngTinyScrollbar",
+  "name": "ng-tiny-scrollbar",
   "version": "0.8.0",
   "description": "An angular directive port of the TinyScrollbar",
   "repository": {
