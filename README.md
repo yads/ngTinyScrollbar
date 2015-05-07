@@ -2,7 +2,7 @@ ngTinyScrollbar
 ===============
 
 An angular directive port of the [TinyScrollbar](https://github.com/wieringen/tinyscrollbar)
-See simple [demo](http://ng-tiny-scrollbar.azurewebsites.net/test.html) 
+See simple [demo](http://ng-tiny-scrollbar.azurewebsites.net/test.html)
 
 How to use
 ==========
@@ -10,6 +10,10 @@ How to use
 Install using bower
 
     bower install ng-tiny-scrollbar --save
+
+Install using npm
+
+    npm install ng-tiny-scrollbar --save
 
 Add css and javascript to your site
 
