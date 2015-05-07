@@ -40,7 +40,8 @@ angular.module('ngTinyScrollbar', [])
                     scrollInvert : false, // Enable invert style scrolling
                     trackSize : false, // Set the size of the scrollbar to auto or a fixed number.
                     thumbSize : false, // Set the size of the thumb to auto or a fixed number.
-                    alwaysVisible: true // Set to false to hide the scrollbar if not being used
+                    alwaysVisible: true, // Set to false to hide the scrollbar if not being used
+                    autoUpdate: false    // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
                 };
                 var options = $attrs.scrollbar;
                 if (options) {
@@ -152,17 +153,19 @@ angular.module('ngTinyScrollbar', [])
                         $element.on(wheelEvent, wheel);
                     }
 
-                    // check DOM content update
-                    var observer = new MutationObserver(function (mutations) {
-                        self.update();
-                    });
+                    if (self.options.autoUpdate && MutationObserver) {
+                        // check DOM content update
+                        var observer = new MutationObserver(function (mutations) {
+                            self.update();
+                        });
 
-                    observer.observe($element[0], {
-                        childList: true,
-                        subtree: true,
-                        characterData: true,
-                        attributes: true
-                    });
+                        observer.observe($element[0], {
+                            childList: true,
+                            subtree: true,
+                            characterData: true,
+                            attributes: true
+                        });
+                    }
                 }
 
                 function resize() {

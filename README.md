@@ -64,7 +64,8 @@ Here's the list of all the options and the default values
     scrollInvert : false,   // Enable invert style scrolling
     trackSize : false,      // Set the size of the scrollbar to auto or a fixed number.
     thumbSize : false,      // Set the size of the thumb to auto or a fixed number.
-    alwaysVisible: true     // Set to false to hide the scrollbar if not being used
+    alwaysVisible: true,    // Set to false to hide the scrollbar if not being used
+    autoUpdate: false       // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
 }
 ```
 
@@ -79,6 +80,16 @@ Build using the less file and specify the following variables:
 @scroll-thumb-color: gray;      // color of the thumb
 @scroll-border-radius: 5px;     // border radius, set to 0 for square scrollbar and thumb
 ```
+
+Autoupdate on DOM changes
+=========================
+The scrollbar supports updates on DOM changes. This needs to be enabled in the options:
+
+```html
+<div scrollbar="{autoUpdate: true}"></div>
+```
+
+In order for this to work, [MutationObserver](http://developer.mozilla.org/en/docs/Web/API/MutationObserver) or a polyfill must be available. See [here](http://caniuse.com/#feat=mutationobserver) which browsers are supported.
 
 License
 =======
