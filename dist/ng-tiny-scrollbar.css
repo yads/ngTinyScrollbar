@@ -20,7 +20,7 @@
   height: 100%;
 }
 .scroll-bar.disable {
-  display: none;
+  visibility: hidden;
 }
 .scroll-bar.visible {
   opacity: 1 !important;
