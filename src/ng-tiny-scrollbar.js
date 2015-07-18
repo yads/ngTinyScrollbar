@@ -161,17 +161,32 @@ angular.module('ngTinyScrollbar', [])
                     }
 
                     if (self.options.autoUpdate && MutationObserver) {
-                        // check DOM content update
-                        var observer = new MutationObserver(function (mutations) {
-                            self.update();
-                        });
+                        (function () {
+                            var recentWidth = $overview[0].offsetWidth,
+                                recentHeight = $overview[0].offsetHeight,
+                                updateTimer;
 
-                        observer.observe($element[0], {
-                            childList: true,
-                            subtree: true,
-                            characterData: true,
-                            attributes: true
-                        });
+                            // check DOM content update
+                            var observer = new MutationObserver(function (mutations) {
+                                // Render scrollbar only with $overview dimension changes, once per digest cycle
+                                if (recentWidth !== $overview[0].offsetWidth ||
+                                    recentHeight !== $overview[0].offsetHeight) {
+                                    $timeout.cancel(updateTimer);
+                                    updateTimer = $timeout(function () {
+                                        recentWidth = $overview[0].offsetWidth;
+                                        recentHeight = $overview[0].offsetHeight;
+                                        self.update();
+                                    });
+                                }
+                            });
+
+                            observer.observe($element[0], {
+                                childList: true,
+                                subtree: true,
+                                characterData: true,
+                                attributes: true
+                            });
+                        })();
                     }
                 }
 
