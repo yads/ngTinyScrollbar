@@ -73,6 +73,15 @@ Here's the list of all the options and the default values
 }
 ```
 
+These can also be set up via the scrollbarProvider. e.g.
+
+```javascript
+myApp.config(['scrollbarProvider', function(scrollbarProvider) {
+  scrollbarProvider.defaults.autoUpdate = true;
+}]);
+```
+These defaults will be available to all scrollbars in your app.
+
 Customizing appearance
 ======================
 
