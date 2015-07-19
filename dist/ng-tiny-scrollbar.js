@@ -25,32 +25,39 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 'use strict';
 
 angular.module('ngTinyScrollbar', [])
-    .directive('scrollbar', ['$window', '$timeout', '$parse', '$animate', function($window, $timeout, $parse, $animate) {
+    .provider('scrollbar', function () {
+
+        this.defaults = {
+            axis: 'y', // Vertical or horizontal scrollbar? ( x || y ).
+            wheel: true, // Enable or disable the mousewheel;
+            wheelSpeed: 40, // How many pixels must the mouswheel scroll at a time.
+            wheelLock: true, // Lock default scrolling window when there is no more content.
+            scrollInvert: false, // Enable invert style scrolling
+            trackSize: false, // Set the size of the scrollbar to auto or a fixed number.
+            thumbSize: false, // Set the size of the thumb to auto or a fixed number.
+            alwaysVisible: true, // Set to false to hide the scrollbar if not being used
+            autoUpdate: false    // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
+        };
+
+        this.$get = function () {
+            return this;
+        };
+    })
+    .directive('scrollbar', ['$window', '$timeout', '$parse', '$animate', 'scrollbar', function($window, $timeout, $parse, $animate, scrollbar) {
         return {
             restrict: 'A',
             transclude: true,
             template: '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
             controller: function($scope, $element, $attrs) {
 
-                var defaults = {
-                    axis : 'y', // Vertical or horizontal scrollbar? ( x || y ).
-                    wheel : true, // Enable or disable the mousewheel;
-                    wheelSpeed : 40, // How many pixels must the mouswheel scroll at a time.
-                    wheelLock : true, // Lock default scrolling window when there is no more content.
-                    scrollInvert : false, // Enable invert style scrolling
-                    trackSize : false, // Set the size of the scrollbar to auto or a fixed number.
-                    thumbSize : false, // Set the size of the thumb to auto or a fixed number.
-                    alwaysVisible: true, // Set to false to hide the scrollbar if not being used
-                    autoUpdate: false    // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
-                };
                 var options = $attrs.scrollbar;
                 if (options) {
                     options = $parse(options)($scope);
                 } else {
                     options = {};
                 }
-                this.options = angular.extend({}, defaults, options);
-                this._defaults = defaults;
+                this.options = angular.extend({}, scrollbar.defaults, options);
+                this._defaults = scrollbar.defaults;
 
                 var self = this,
                     $body = angular.element(document.querySelectorAll('body')[0]),
@@ -154,17 +161,32 @@ angular.module('ngTinyScrollbar', [])
                     }
 
                     if (self.options.autoUpdate && MutationObserver) {
-                        // check DOM content update
-                        var observer = new MutationObserver(function (mutations) {
-                            self.update();
-                        });
+                        (function () {
+                            var recentWidth = $overview[0].offsetWidth,
+                                recentHeight = $overview[0].offsetHeight,
+                                updateTimer;
 
-                        observer.observe($element[0], {
-                            childList: true,
-                            subtree: true,
-                            characterData: true,
-                            attributes: true
-                        });
+                            // check DOM content update
+                            var observer = new MutationObserver(function (mutations) {
+                                // Render scrollbar only with $overview dimension changes, once per digest cycle
+                                if (recentWidth !== $overview[0].offsetWidth ||
+                                    recentHeight !== $overview[0].offsetHeight) {
+                                    $timeout.cancel(updateTimer);
+                                    updateTimer = $timeout(function () {
+                                        recentWidth = $overview[0].offsetWidth;
+                                        recentHeight = $overview[0].offsetHeight;
+                                        self.update();
+                                    });
+                                }
+                            });
+
+                            observer.observe($element[0], {
+                                childList: true,
+                                subtree: true,
+                                characterData: true,
+                                attributes: true
+                            });
+                        })();
                     }
                 }
 
