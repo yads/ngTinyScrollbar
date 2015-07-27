@@ -104,7 +104,7 @@ angular.module('ngTinyScrollbar', [])
                     this.trackSize = this.options.trackSize || this.viewportSize;
                     this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
                     this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
-                    mousePosition = $scrollbar.prop('offsetTop');
+                    mousePosition = $scrollbar.offset().top;
 
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1 || isNaN(this.contentRatio));
 
@@ -295,7 +295,7 @@ angular.module('ngTinyScrollbar', [])
                     if((self.options.scrollInvert && event.type === 'mousemove') ||
                         (event.type !== 'mousemove' && !self.options.scrollInvert))
                     {
-                        thumbPositionDelta = mousePosition - mousePositionNew;
+                        thumbPositionDelta = mousePositionNew - mousePosition;
                     }
                     var thumbPositionNew = Math.min((self.trackSize - self.thumbSize), Math.max(0, self.thumbPosition + thumbPositionDelta));
                     self.contentPosition = thumbPositionNew * self.trackRatio;
