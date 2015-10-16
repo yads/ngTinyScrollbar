@@ -36,7 +36,12 @@ angular.module('ngTinyScrollbar', [])
             trackSize: false, // Set the size of the scrollbar to auto or a fixed number.
             thumbSize: false, // Set the size of the thumb to auto or a fixed number.
             alwaysVisible: true, // Set to false to hide the scrollbar if not being used
-            autoUpdate: false    // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
+            autoUpdate: false,    // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
+            thumbClass: [],        // custom classes to be added to thumb
+            scrollbarClass: [],    // custom classes to be added to scroll-bar
+            scrollBarOffsetTop: 0,      //additional offset to position scrollbar
+            scrollBarOffsetBottom: 0,    //additional offset to position scrollbar
+            scrollBarOffsetRight: 0,    //additional offset to position scrollbar
         };
 
         this.$get = function () {
@@ -92,18 +97,47 @@ angular.module('ngTinyScrollbar', [])
                     if (!this.options.alwaysVisible) {
                         $scrollbar.css('opacity', 0);
                     }
+
+                    self.applyClasses();
                     self.update();
                     setEvents();
                     return self;
+                };
+
+                this.applyClasses = function(){
+
+                    // classes for scroll-bar
+                    if (typeof this.options.scrollbarClass === 'string'){
+                        $scrollbar.addClass(this.options.scrollbarClass);
+                    } else if (typeof this.options.scrollbarClass === 'object'){
+                        var x;
+                        for (x in this.options.scrollbarClass){
+                            $scrollbar.addClass(this.options.scrollbarClass[x])
+                        }
+                    }
+
+                    // classes for thumb
+                    if (typeof this.options.thumbClass === 'string'){
+                        $thumb.addClass(this.options.thumbClass);
+                    } else if (typeof this.options.thumbClass === 'object'){
+                        var x;
+                        for (x in this.options.thumbClass){
+                            $thumb.addClass(this.options.thumbClass[x])
+                        }
+                    }
+
                 };
 
                 this.update = function(scrollTo) {
                     this.viewportSize = $viewport.prop('offset'+ sizeLabelCap);
                     this.contentSize = $overview.prop('scroll'+ sizeLabelCap);
                     this.contentRatio = this.viewportSize / this.contentSize;
-                    this.trackSize = this.options.trackSize || this.viewportSize;
+                    this.trackSize = (this.options.trackSize || this.viewportSize) - this.options.scrollBarOffsetTop - this.options.scrollBarOffsetBottom;
                     this.thumbSize = Math.min(this.trackSize, Math.max(0, (this.options.thumbSize || (this.trackSize * this.contentRatio))));
                     this.trackRatio = this.options.thumbSize ? (this.contentSize - this.viewportSize) / (this.trackSize - this.thumbSize) : (this.contentSize / this.trackSize);
+                    this.scrollBarOffsetTop = this.options.scrollBarOffsetTop;
+                    this.scrollBarOffsetBottom = this.options.scrollBarOffsetBottom;
+                    this.scrollBarOffsetRight = this.options.scrollBarOffsetRight;
                     mousePosition = $scrollbar.prop('offsetTop');
 
                     $scrollbar.toggleClass('disable', this.contentRatio >= 1 || isNaN(this.contentRatio));
@@ -128,7 +162,9 @@ angular.module('ngTinyScrollbar', [])
 
                     ensureContentPosition();
                     $thumb.css(posiLabel, self.contentPosition / self.trackRatio + 'px');
-                    $scrollbar.css(sizeLabel, self.trackSize + 'px');
+                    $scrollbar.css('top', self.scrollBarOffsetTop + 'px');
+                    $scrollbar.css('bottom', self.scrollBarOffsetBottom + 'px');
+                    $scrollbar.css('right', self.scrollBarOffsetRight + 'px');
                     $thumb.css(sizeLabel, self.thumbSize + 'px');
                     $overview.css(posiLabel, -self.contentPosition + 'px');
 

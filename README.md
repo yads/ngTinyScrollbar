@@ -70,6 +70,8 @@ Here's the list of all the options and the default values
     thumbSize : false,      // Set the size of the thumb to auto or a fixed number.
     alwaysVisible: true,    // Set to false to hide the scrollbar if not being used
     autoUpdate: false       // Autoupdate the scrollbar if DOM changes. Needs MutationObserver or a polyfill to be available
+    thumbClass: []          // Custom classes to apply on 'scroll-thumb' element (Might be also a string)
+    scrollbarClass: []      // Custom classes to apply on 'scrollbar' element (Might be also a string)
 }
 ```
 

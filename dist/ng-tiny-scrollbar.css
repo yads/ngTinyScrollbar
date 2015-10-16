@@ -13,11 +13,8 @@
   background-color: #d3d3d3;
   border-radius: 5px;
   position: absolute;
-  top: 0;
-  right: 0;
   width: 15px;
   transition: 0.6s ease-in-out opacity;
-  height: 100%;
 }
 .scroll-bar.disable {
   display: none;
