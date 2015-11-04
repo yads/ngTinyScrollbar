@@ -112,7 +112,9 @@ angular.module('ngTinyScrollbar', [])
                         //flash the scrollbar when update happens
                         $animate.addClass($scrollbar, 'visible').then(function() {
                             $animate.removeClass($scrollbar, 'visible');
-                            $scope.$digest();
+                            $timeout(function(){
+                                $scope.$digest();
+                            });
                         });
                     }
 
