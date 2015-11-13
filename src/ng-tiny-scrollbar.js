@@ -21,7 +21,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
  */
-
+(function() {
 'use strict';
 
 angular.module('ngTinyScrollbar', [])
@@ -48,7 +48,7 @@ angular.module('ngTinyScrollbar', [])
             restrict: 'A',
             transclude: true,
             template: '<div class="scroll-bar"><div class="scroll-thumb"></div></div><div class="scroll-viewport"><div class="scroll-overview" ng-transclude></div></div>',
-            controller: function($scope, $element, $attrs) {
+            controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
 
                 var options = $attrs.scrollbar;
                 if (options) {
@@ -333,7 +333,7 @@ angular.module('ngTinyScrollbar', [])
                     end();
                 };
 
-            },
+            }],
             link: function(scope, iElement, iAttrs, controller) {
                 var position = $window.getComputedStyle(iElement[0]).getPropertyValue('position');
                 if (position !== 'relative' && position !== 'absolute') {
@@ -346,3 +346,4 @@ angular.module('ngTinyScrollbar', [])
             }
         };
     }]);
+})();
