@@ -112,7 +112,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                             //flash the scrollbar when update happens
                             $animate.addClass($scrollbar, 'visible').then(function() {
                                 $animate.removeClass($scrollbar, 'visible');
-                                $scope.$digest();
                             });
                         }
 
