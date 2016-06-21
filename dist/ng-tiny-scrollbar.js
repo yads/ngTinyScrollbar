@@ -272,6 +272,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         if(self.options.wheelLock || (self.contentPosition !== (self.contentSize - self.viewportSize) && self.contentPosition !== 0)) {
                             evntObj.preventDefault();
                         }
+
+                        evntObj.stopPropagation();
                     }
 
                     function touchdrag(event) {
