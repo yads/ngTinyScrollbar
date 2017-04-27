@@ -159,7 +159,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                             $element.on(wheelEvent, wheel);
                         }
 
-                        if (self.options.autoUpdate && typeof window.MutationObserver === 'function') {
+                        if (self.options.autoUpdate && typeof MutationObserver === 'function') {
                             (function () {
                                 var recentWidth = $overview[0].offsetWidth,
                                     recentHeight = $overview[0].offsetHeight,
